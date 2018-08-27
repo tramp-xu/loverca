@@ -1,6 +1,6 @@
-# firstfront
+# lvoerca
 
-> A Vue.js project
+> A Vue.js project (a lover calendar based on node apiServer)
 
 ## Build Setup
 
