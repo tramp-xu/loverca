@@ -2,7 +2,7 @@
   <div class="register">
     <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="0" class="registerForm">
       <el-form-item prop="user_name">
-        <el-input type="password" v-model="registerForm.user_name" placeholder="输入账号" auto-complete="off"></el-input>
+        <el-input type="text" v-model="registerForm.user_name" placeholder="输入账号" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item prop="password">
         <el-input type="password" v-model="registerForm.password" placeholder="输入密码" auto-complete="off"></el-input>

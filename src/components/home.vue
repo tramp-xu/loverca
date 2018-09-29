@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <h1>home</h1>
+    <el-button @click="search">anniu</el-button>
   </div>
 </template>
 
@@ -12,18 +13,21 @@ export default {
     }
   },
   mounted () {
-    let token = localStorage.getItem('token')
-    console.log(token)
-    this.axios({
-      method: 'get',
-      url: 'api/users',
-      headers: {'x-access-token': token}
-    }).then(resp => {
-    }, resp => {
-      // this.$router.push({name: 'login'});
-    })
+    this.search()
   },
   methods: {
+    async getUsers () {
+      const data = await this.axios.get('/api/admin/search')
+      console.log(data)
+    },
+    async search () {
+      try {
+        const data = await this.axios.get('/api/admin/search?limit=20')
+        console.log(data)
+      } catch (e) {
+        console.error(e)
+      }
+    }
   }
 }
 </script>

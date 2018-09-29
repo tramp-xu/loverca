@@ -11,6 +11,14 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
 
+const token = localStorage.getItem('token')
+axios.interceptors.request.use(function (config) {
+  config.headers.authorization = `Bearer ${token}`
+  return config
+}, function (error) {
+  return Promise.reject(error)
+})
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

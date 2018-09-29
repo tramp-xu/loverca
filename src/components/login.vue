@@ -2,7 +2,7 @@
   <div class="login">
     <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="0" class="loginForm">
       <el-form-item label="" prop="user_name">
-        <el-input type="password" v-model="loginForm.user_name" placeholder="账户名" auto-complete="off"></el-input>
+        <el-input type="text" v-model="loginForm.user_name" placeholder="账户名" auto-complete="on"></el-input>
       </el-form-item>
       <el-form-item label="" prop="password">
         <el-input type="password" v-model="loginForm.password" placeholder="密码" auto-complete="off"></el-input>
@@ -57,8 +57,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.axios.post('/api/admin/login', this.loginForm).then(resp => {
-            if (resp.data.status === 200) {
-              localStorage.setItem('token', resp.data.token)
+            if (resp.data.success) {
+              localStorage.setItem('token', resp.data.data.token)
               this.$router.push({name: 'home'})
             }
           })
