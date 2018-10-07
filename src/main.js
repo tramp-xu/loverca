@@ -11,11 +11,11 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
 
-const token = localStorage.getItem('token')
-axios.interceptors.request.use(function (config) {
-  config.headers.authorization = `Bearer ${token}`
+axios.interceptors.request.use(config => {
+  let token = localStorage.getItem('token')
+  config.headers['Authorization'] = `Bearer ${token}`
   return config
-}, function (error) {
+}, error => {
   return Promise.reject(error)
 })
 

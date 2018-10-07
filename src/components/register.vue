@@ -1,8 +1,8 @@
 <template>
   <div class="register">
     <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="0" class="registerForm">
-      <el-form-item prop="user_name">
-        <el-input type="text" v-model="registerForm.user_name" placeholder="输入账号" auto-complete="off"></el-input>
+      <el-form-item prop="userName">
+        <el-input type="text" v-model="registerForm.userName" placeholder="输入账号" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item prop="password">
         <el-input type="password" v-model="registerForm.password" placeholder="输入密码" auto-complete="off"></el-input>
@@ -12,6 +12,9 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="register('registerForm')">注册</el-button>
+        <router-link to="/login">
+          <el-button>前往登陆</el-button>
+        </router-link>
       </el-form-item>
     </el-form>
   </div>
@@ -44,12 +47,12 @@ export default {
     }
     return {
       registerForm: {
-        user_name: '',
+        userName: '',
         password: '',
         checkPwd: ''
       },
       rules: {
-        user_name: [
+        userName: [
           { validator: checkUser, trigger: 'blur' }
         ],
         password: [
@@ -71,14 +74,13 @@ export default {
       this.$refs[formName].validate((valid) => {
         const form = this.registerForm
         const data = {
-          user_name: form.user_name,
+          userName: form.userName,
           password: form.password
         }
         if (valid) {
           this.axios.post('/api/admin/register', data).then(resp => {
-            if (resp.data.status === 200) {
-              this.$router.push({name: 'login'})
-            }
+            console.log(resp)
+            this.$router.push({name: 'login'})
           })
         } else {
           console.log('error submit!!')

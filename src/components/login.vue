@@ -1,22 +1,25 @@
 <template>
   <div class="login">
     <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="0" class="loginForm">
-      <el-form-item label="" prop="user_name">
-        <el-input type="text" v-model="loginForm.user_name" placeholder="账户名" auto-complete="on"></el-input>
+      <el-form-item prop="userName">
+        <el-input type="text" v-model="loginForm.userName" placeholder="账户名" auto-complete="on"></el-input>
       </el-form-item>
-      <el-form-item label="" prop="password">
+      <el-form-item prop="password">
         <el-input type="password" v-model="loginForm.password" placeholder="密码" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
         <el-button @click="resetForm('loginForm')">重置</el-button>
-        <el-button @click="search()">查询用户</el-button>
+        <router-link to="/register">
+          <el-button>立即注册</el-button>
+        </router-link>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+// import axios from 'axios'
 export default {
   name: 'login',
   data () {
@@ -34,11 +37,11 @@ export default {
     }
     return {
       loginForm: {
-        user_name: '',
+        userName: '',
         password: ''
       },
       rules: {
-        user_name: [
+        userName: [
           { validator: checkUser, trigger: 'blur' }
         ],
         password: [
@@ -47,18 +50,13 @@ export default {
       }
     }
   },
-  mounted () {
-    // this.axios.get('api/users').then((response) => {
-    //   console.log(response.data)
-    // })
-  },
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.axios.post('/api/admin/login', this.loginForm).then(resp => {
-            if (resp.data.success) {
-              localStorage.setItem('token', resp.data.data.token)
+            if (resp.success) {
+              localStorage.setItem('token', resp.data.token)
               this.$router.push({name: 'home'})
             }
           })
@@ -71,12 +69,13 @@ export default {
     resetForm (formName) {
       this.$refs[formName].resetFields()
     },
-    search () {
-      this.axios.get('/api/admin/search?limit=20').then(res => {
-        console.log(res)
-      }).catch(e => {
+    async search () {
+      try {
+        const data = await this.axios.get('/api/admin/search?limit=20')
+        console.log(data)
+      } catch (e) {
         console.error(e)
-      })
+      }
     }
   }
 }

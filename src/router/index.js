@@ -30,3 +30,5 @@ export default new Router({
     }
   ]
 })
+
+// 路由全局钩子

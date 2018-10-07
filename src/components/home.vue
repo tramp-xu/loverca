@@ -2,6 +2,7 @@
   <div class="home">
     <h1>home</h1>
     <el-button @click="search">anniu</el-button>
+    <el-button @click="logout">logout</el-button>
   </div>
 </template>
 
@@ -12,14 +13,10 @@ export default {
     return {
     }
   },
-  mounted () {
+  created () {
     this.search()
   },
   methods: {
-    async getUsers () {
-      const data = await this.axios.get('/api/admin/search')
-      console.log(data)
-    },
     async search () {
       try {
         const data = await this.axios.get('/api/admin/search?limit=20')
@@ -27,6 +24,10 @@ export default {
       } catch (e) {
         console.error(e)
       }
+    },
+    logout () {
+      console.log('object')
+      localStorage.clear()
     }
   }
 }

@@ -5,8 +5,35 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  name: 'App'
+  name: 'App',
+  beforeCreate () {
+    axios.interceptors.response.use(response => {
+      const data = response.data
+      const success = data.success
+      const message = data.message
+      if (success) {
+        return data
+      } else {
+        this.$notify.error({
+          title: '错误',
+          message: message
+        })
+        return false
+      }
+    }, err => {
+      if (err.response.status === 401) {
+        window.localStorage.removeItem('token')
+        this.$notify.error({
+          title: '错误',
+          message: err.response.data.message
+        })
+        this.$router.push('/login')
+      }
+      return Promise.reject(err)
+    })
+  }
 }
 </script>
 
