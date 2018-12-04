@@ -11,7 +11,8 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {target: 'http://10.200.148.1:3000'}
+      '/api': {target: 'http://10.200.154.101:3000'},
+      '/nestApi': {target: 'http://10.200.154.101:8888'}
     },
 
     // Various Dev Server settings

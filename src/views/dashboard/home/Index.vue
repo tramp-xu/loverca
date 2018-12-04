@@ -8,7 +8,6 @@
 
 <script>
 export default {
-  name: 'home',
   data () {
     return {
     }
@@ -28,16 +27,19 @@ export default {
     logout () {
       console.log('object')
       localStorage.clear()
+      this.$message({
+        message: '已注销登录',
+        type: 'success'
+      })
+      this.$router.push('/login')
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.home{
+<style>
+.home {
   width: 100%;
-  margin: 0 auto;
-  padding: 0 10px;
+  height: 100%;
 }
 </style>

@@ -8,6 +8,7 @@
         <el-input type="password" v-model="loginForm.password" placeholder="密码" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item>
+        <el-button @click="gitLogin">Github Login</el-button>
         <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
         <el-button @click="resetForm('loginForm')">重置</el-button>
         <router-link to="/register">
@@ -51,13 +52,19 @@ export default {
     }
   },
   methods: {
+    async gitLogin () {
+      const data = await this.axios.get('/api/third-party/login')
+      console.log(data)
+      window.location.href = data.data.url
+    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.axios.post('/api/admin/login', this.loginForm).then(resp => {
             if (resp.success) {
               localStorage.setItem('token', resp.data.token)
-              this.$router.push({name: 'home'})
+              localStorage.setItem('uid', resp.data.user.uid)
+              this.$router.push({name: 'index'})
             }
           })
         } else {
@@ -85,8 +92,11 @@ export default {
 <style scoped>
 .login{
   width: 100%;
-  max-width: 360px;
-  margin: 0 auto;
+  max-width: 460px;
   padding: 0 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
